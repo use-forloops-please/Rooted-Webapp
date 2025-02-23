@@ -1,12 +1,21 @@
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import HomePage from './pages';
+import CartPage from './pages/cart';
+import ProductsPage from './pages/products';
 
-import './App.css'
-import './index.css' 
-import FarmersMarketApp from './components/layout/farmersMarketLayout'
 
-function App() {
+const App: React.FC = () => {
   return (
-    <FarmersMarketApp />
-  )
-}
+    <Router>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/products" element={<ProductsPage />} />
+        <Route path="/vendors" element={<HomePage />} />
+        <Route path="/cart" element={<CartPage />} />
+      </Routes>
+    </Router>
+  );
+};
 
-export default App
+export default App;
