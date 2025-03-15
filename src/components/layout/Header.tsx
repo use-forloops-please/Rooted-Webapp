@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, ShoppingCart, User } from 'lucide-react';
+import { Menu, X, ShoppingCart, User, MessageSquare } from 'lucide-react';
 
 const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
+
+  // Mock unread message count - in a real app, this would come from state or context
+  const unreadMessageCount = 65;
 
   const isActivePath = (path: string) => {
     return location.pathname === path;
@@ -51,10 +54,22 @@ const Header: React.FC = () => {
                 </span>
               </Link>
               
-              <button className="flex items-center space-x-2 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg transition-colors duration-200">
+              <Link to="/messages" className="relative hover:text-green-400 transition-colors">
+                <MessageSquare className="w-6 h-6" />
+                {unreadMessageCount > 0 && (
+                  <span className="absolute -top-2 -right-2 bg-green-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                    {unreadMessageCount}
+                  </span>
+                )}
+              </Link>
+              
+              <Link 
+                to="/login" 
+                className="flex items-center space-x-2 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg transition-colors duration-200"
+              >
                 <User className="w-5 h-5" />
                 <span>Login</span>
-              </button>
+              </Link>
             </div>
           </nav>
 
@@ -75,10 +90,18 @@ const Header: React.FC = () => {
               <Link to="/vendors" className="px-4 py-2 hover:bg-gray-800 rounded-lg">Vendors</Link>
               <Link to="/products" className="px-4 py-2 hover:bg-gray-800 rounded-lg">Products</Link>
               <Link to="/cart" className="px-4 py-2 hover:bg-gray-800 rounded-lg">Cart</Link>
-              <button className="flex items-center space-x-2 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg transition-colors duration-200 mt-2">
+              <Link to="/messages" className="px-4 py-2 hover:bg-gray-800 rounded-lg flex items-center justify-between">
+                Messages
+                {unreadMessageCount > 0 && (
+                  <span className="bg-green-500 text-white text-xs px-2 py-1 rounded-full">
+                    {unreadMessageCount}
+                  </span>
+                )}
+              </Link>
+              <Link to="/login" className="flex items-center space-x-2 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg transition-colors duration-200 mt-2">
                 <User className="w-5 h-5" />
                 <span>Login</span>
-              </button>
+              </Link>
             </nav>
           </div>
         )}
